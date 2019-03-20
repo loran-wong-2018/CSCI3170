@@ -1,10 +1,9 @@
-## Prerequisite
-1. Connect to CSE VPN  
-Refer to the powerpoint slides of tutorial 5
+## Step 0: Prerequisite
+1. Connect to CSE VPN --> Refer to the powerpoint slides of tutorial 5
 
 2. Download SSH Secure Shell
 
-## SSH Secure Shell
+## Step 1: SSH Secure Shell
 
 ### Connect to Linux Server
 
@@ -20,10 +19,10 @@ CSCI3170
 
 use db28;
 
-## Command Line Interface
+## Step 2: Command Line Interface
 ### Compile the java program files if it has been changed
-1. Download the java jdk program to use the javac function.  
-2. Set the path so that the javac function can be run. (the code below differs from computers)  
+1. Download and install the java jdk program to use the javac function   
+2. Set the path so that the javac function can be run (the code below differs from computers)  
 `set PATH=%PATH%;C:\Program Files\Java\jdk1.8.0_181\bin`  
 3. As an example, the code below compiles the admin.java program.  
 `javac admin.java`  
