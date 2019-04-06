@@ -30,5 +30,5 @@ use db28;
 In case of error, this thread may be useful https://stackoverflow.com/questions/15575801/javac-is-not-found
 
 ### Run the program
-As an example, the code below runs the admin.java program  
+As an example, the code below runs the admin.java program (the code below differs from computers)
 `java -cp .;C:\Users\LoranWong\Desktop\CSCI3170\mysql-connector-java-5.1.47\mysql-connector-java-5.1.47.jar admin`
