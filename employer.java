@@ -194,34 +194,52 @@ class employer {
 						System.out.println("Please pick one position id.");
 						Scanner pidReader = new Scanner(System.in);  // Reading from System.in
 						String pidInput = pidReader.next();
+						// Check whether there are employees marked this position as interested
+						int employeeMarkedInterested = 0;
 						try {
-							System.out.println("The employees who mark interested in this position recruitment are:");
-							System.out.println("Employee_ID, Name, Expected_Salary, Experience, Skills");
-							Statement pidnestedStmt = con.createStatement();
-							String pidnestedQuery = "SELECT * FROM marked WHERE Position_ID='" + pidInput + "'";
-							ResultSet pidnestedRs = pidnestedStmt.executeQuery(pidnestedQuery);
-							while(pidnestedRs.next()) {
-								Statement nested2Stmt = con.createStatement();
-								String nested2Query = "SELECT * FROM Employee WHERE Employee_ID='" + pidnestedRs.getString("Employee_ID") + "'";
-								ResultSet nested2Rs = nested2Stmt.executeQuery(nested2Query);
-								while(nested2Rs.next()) {
-									System.out.println(nested2Rs.getString("Employee_ID") + ", " + nested2Rs.getString("Name") + ", " + nested2Rs.getInt("Expected_Salary") + ", " + nested2Rs.getInt("Experience") + ", " + nested2Rs.getString("Skills"));
-								}
+							Statement pidcheckStmt = con.createStatement();
+							String pidcheckQuery = "SELECT * FROM marked WHERE Position_ID='" + pidInput + "'";
+							ResultSet pidcheckRs = pidcheckStmt.executeQuery(pidcheckQuery);
+							while(pidcheckRs.next()) {
+								employeeMarkedInterested = 1;
 							}
 						} catch (SQLException e) {
-							System.out.println(e);
+							System.out.println("Position ID is invalid.");
 						}
-						System.out.println("Please pick one employee by Employee_ID.");
-						Scanner eeidReader = new Scanner(System.in);  // Reading from System.in
-						String eeidInput = eeidReader.next();
-						try {
-							Statement nestedStmt = con.createStatement();
-							String nestedQuery = "UPDATE marked SET Status=TRUE WHERE Position_ID='" + pidInput + "' AND Employee_ID='" + eeidInput + "'";
-							nestedStmt.executeUpdate(nestedQuery);
-						} catch (SQLException e) {
-							System.out.println(e);
+						if(employeeMarkedInterested == 1) {
+							try {
+								System.out.println("The employees who mark interested in this position recruitment are:");
+								System.out.println("Employee_ID, Name, Expected_Salary, Experience, Skills");
+								Statement pidnestedStmt = con.createStatement();
+								String pidnestedQuery = "SELECT * FROM marked WHERE Position_ID='" + pidInput + "'";
+								ResultSet pidnestedRs = pidnestedStmt.executeQuery(pidnestedQuery);
+								while(pidnestedRs.next()) {
+									Statement nested2Stmt = con.createStatement();
+									String nested2Query = "SELECT * FROM Employee WHERE Employee_ID='" + pidnestedRs.getString("Employee_ID") + "'";
+									ResultSet nested2Rs = nested2Stmt.executeQuery(nested2Query);
+									while(nested2Rs.next()) {
+										System.out.println(nested2Rs.getString("Employee_ID") + ", " + nested2Rs.getString("Name") + ", " + nested2Rs.getInt("Expected_Salary") + ", " + nested2Rs.getInt("Experience") + ", " + nested2Rs.getString("Skills"));
+									}
+								}
+							} catch (SQLException e) {
+								System.out.println(e);
+							}
+							System.out.println("Please pick one employee by Employee_ID.");
+							Scanner eeidReader = new Scanner(System.in);  // Reading from System.in
+							String eeidInput = eeidReader.next();
+							try {
+								Statement nestedStmt = con.createStatement();
+								String nestedQuery = "UPDATE marked SET Status=TRUE WHERE Position_ID='" + pidInput + "' AND Employee_ID='" + eeidInput + "'";
+								nestedStmt.executeUpdate(nestedQuery);
+								System.out.println("An IMMEDIATE interview has done.");
+							} catch (SQLException e) {
+								System.out.println("Employee ID doesn't match.");
+							}
+						} else {
+							System.out.println("There are no employees marked this position as interested.");
 						}
-						System.out.println("An IMMEDIATE interview has done.");
+					} else {
+						System.out.println("There are no position posted for this employer.");
 					}
 				} else {
 					System.out.println("Employer ID does not exist.");
